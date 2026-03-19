@@ -1,0 +1,273 @@
+{
+	"info": {
+		"name": "E-Commerce API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:5000/api/v1"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseURL}}/auth/register", "host": ["{{baseURL}}"], "path": ["auth", "register"] }
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseURL}}/auth/login", "host": ["{{baseURL}}"], "path": ["auth", "login"] }
+					}
+				},
+				{
+					"name": "Get Me",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/auth/me", "host": ["{{baseURL}}"], "path": ["auth", "me"] }
+					}
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/auth/update-password", "host": ["{{baseURL}}"], "path": ["auth", "update-password"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/products", "host": ["{{baseURL}}"], "path": ["products"] }
+					}
+				},
+				{
+					"name": "Get Single Product",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/products/:id", "host": ["{{baseURL}}"], "path": ["products", ":id"] }
+					}
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseURL}}/products", "host": ["{{baseURL}}"], "path": ["products"] }
+					}
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/products/:id", "host": ["{{baseURL}}"], "path": ["products", ":id"] }
+					}
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseURL}}/products/:id", "host": ["{{baseURL}}"], "path": ["products", ":id"] }
+					}
+				},
+				{
+					"name": "Get My Products",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/products/seller/mine", "host": ["{{baseURL}}"], "path": ["products", "seller", "mine"] }
+					}
+				},
+				{
+					"name": "Get By Category",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/products/category/:catId", "host": ["{{baseURL}}"], "path": ["products", "category", ":catId"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/users", "host": ["{{baseURL}}"], "path": ["users"] }
+					}
+				},
+				{
+					"name": "Get Single User",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/users/:id", "host": ["{{baseURL}}"], "path": ["users", ":id"] }
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/users/:id", "host": ["{{baseURL}}"], "path": ["users", ":id"] }
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseURL}}/users/:id", "host": ["{{baseURL}}"], "path": ["users", ":id"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Place Order",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseURL}}/orders", "host": ["{{baseURL}}"], "path": ["orders"] }
+					}
+				},
+				{
+					"name": "Get My Orders",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/orders", "host": ["{{baseURL}}"], "path": ["orders"] }
+					}
+				},
+				{
+					"name": "Get Single Order",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/orders/:id", "host": ["{{baseURL}}"], "path": ["orders", ":id"] }
+					}
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/orders/:id/status", "host": ["{{baseURL}}"], "path": ["orders", ":id", "status"] }
+					}
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/orders/:id/cancel", "host": ["{{baseURL}}"], "path": ["orders", ":id", "cancel"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Get Cart",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/cart", "host": ["{{baseURL}}"], "path": ["cart"] }
+					}
+				},
+				{
+					"name": "Add Item",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseURL}}/cart/add", "host": ["{{baseURL}}"], "path": ["cart", "add"] }
+					}
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/cart/update", "host": ["{{baseURL}}"], "path": ["cart", "update"] }
+					}
+				},
+				{
+					"name": "Remove Item",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseURL}}/cart/remove/:productId", "host": ["{{baseURL}}"], "path": ["cart", "remove", ":productId"] }
+					}
+				},
+				{
+					"name": "Clear Cart",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseURL}}/cart/clear", "host": ["{{baseURL}}"], "path": ["cart", "clear"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"url": { "raw": "{{baseURL}}/reviews", "host": ["{{baseURL}}"], "path": ["reviews"] }
+					}
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseURL}}/reviews/:id", "host": ["{{baseURL}}"], "path": ["reviews", ":id"] }
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/admin/dashboard", "host": ["{{baseURL}}"], "path": ["admin", "dashboard"] }
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/admin/users", "host": ["{{baseURL}}"], "path": ["admin", "users"] }
+					}
+				},
+				{
+					"name": "Update User Role",
+					"request": {
+						"method": "PUT",
+						"url": { "raw": "{{baseURL}}/admin/users/:id/role", "host": ["{{baseURL}}"], "path": ["admin", "users", ":id", "role"] }
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "{{baseURL}}/admin/users/:id", "host": ["{{baseURL}}"], "path": ["admin", "users", ":id"] }
+					}
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "{{baseURL}}/admin/orders", "host": ["{{baseURL}}"], "path": ["admin", "orders"] }
+					}
+				}
+			]
+		}
+	]
+}

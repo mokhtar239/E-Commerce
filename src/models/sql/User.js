@@ -34,7 +34,7 @@ const User = sequelize.define(
         },
         password: {
             type: DataTypes.STRING(255),
-            allowNull: false,
+            allowNull: true,
             validate: {
                 len: { args: [6, 255], msg: "Password must be at least 6 characters" },
             },

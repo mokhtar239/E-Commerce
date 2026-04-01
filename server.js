@@ -5,6 +5,7 @@ const app = require("./src/app");
 const { connectMySQL } = require("./src/config/mysql");
 const connectMongoDB = require("./src/config/mongodb");
 const { sequelize } = require("./src/models/sql");
+const startAllJobs = require("./src/jobs/cronJobs");
 
 const PORT = process.env.PORT || 5000;
 
@@ -15,6 +16,8 @@ const startServer = async () => {
   // Sync all Sequelize models with MySQL
   await sequelize.sync({ alter: true });
   console.log('MySQL tables synced successfully');
+
+  startAllJobs();
 
   app.listen(PORT, () => {
     console.log(

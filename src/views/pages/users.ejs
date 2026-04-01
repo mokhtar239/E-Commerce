@@ -1,0 +1,38 @@
+<h1>Users Management</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Joined</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(user => { %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><span class="badge badge-<%= user.role %>"><%= user.role %></span></td>
+      <td><%= new Date(user.createdAt).toLocaleDateString() %></td>
+      <td>
+        <form action="/admin/users/<%= user.id %>/role" method="POST" style="display:inline;">
+          <select name="role" class="role-select">
+            <option value="buyer" <%= user.role === 'buyer' ? 'selected' : '' %>>Buyer</option>
+            <option value="seller" <%= user.role === 'seller' ? 'selected' : '' %>>Seller</option>
+            <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+          </select>
+          <button type="submit" class="btn btn-primary btn-sm">Update</button>
+        </form>
+        <form action="/admin/users/<%= user.id %>/delete" method="POST" style="display:inline; margin-left:4px;">
+          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this user?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

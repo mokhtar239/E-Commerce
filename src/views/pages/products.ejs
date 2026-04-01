@@ -1,0 +1,36 @@
+<h1>Products Management</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Sold</th>
+      <th>Rating</th>
+      <th>Active</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(product => { %>
+    <tr>
+      <td><%= product.name %></td>
+      <td>$<%= product.price.toFixed(2) %></td>
+      <td style="color: <%= product.stock < 5 ? '#e94560' : '#333' %>; font-weight: <%= product.stock < 5 ? '700' : '400' %>">
+        <%= product.stock %>
+      </td>
+      <td><%= product.sold %></td>
+      <td><%= product.ratingsAvg ? product.ratingsAvg.toFixed(1) : 'N/A' %> (<%= product.ratingsCount %>)</td>
+      <td><span class="badge <%= product.isActive ? 'badge-delivered' : 'badge-cancelled' %>"><%= product.isActive ? 'Yes' : 'No' %></span></td>
+      <td>
+        <form action="/admin/products/<%= product._id %>/toggle" method="POST" style="display:inline;">
+          <button type="submit" class="btn <%= product.isActive ? 'btn-danger' : 'btn-success' %> btn-sm">
+            <%= product.isActive ? 'Deactivate' : 'Activate' %>
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

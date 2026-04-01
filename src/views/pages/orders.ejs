@@ -1,0 +1,60 @@
+<h1>Orders Management</h1>
+
+<div class="filter-bar">
+  <form action="/admin/orders" method="GET" style="display:flex; gap:12px; align-items:center;">
+    <select name="status">
+      <option value="">All Statuses</option>
+      <option value="pending" <%= filter === 'pending' ? 'selected' : '' %>>Pending</option>
+      <option value="confirmed" <%= filter === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
+      <option value="shipped" <%= filter === 'shipped' ? 'selected' : '' %>>Shipped</option>
+      <option value="delivered" <%= filter === 'delivered' ? 'selected' : '' %>>Delivered</option>
+      <option value="cancelled" <%= filter === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+  </form>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User ID</th>
+      <th>Total</th>
+      <th>Status</th>
+      <th>Payment</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% orders.forEach(order => { %>
+    <tr>
+      <td>#<%= order.id %></td>
+      <td><%= order.userId %></td>
+      <td>$<%= parseFloat(order.totalAmount).toFixed(2) %></td>
+      <td><span class="badge badge-<%= order.status %>"><%= order.status %></span></td>
+      <td><%= order.paymentStatus %></td>
+      <td><%= new Date(order.createdAt).toLocaleDateString() %></td>
+      <td>
+        <% if (order.status !== 'cancelled' && order.status !== 'delivered') { %>
+          <form action="/admin/orders/<%= order.id %>/status" method="POST" style="display:inline;">
+            <select name="status" class="role-select">
+              <% if (order.status === 'pending') { %>
+                <option value="confirmed">Confirm</option>
+                <option value="cancelled">Cancel</option>
+              <% } else if (order.status === 'confirmed') { %>
+                <option value="shipped">Ship</option>
+                <option value="cancelled">Cancel</option>
+              <% } else if (order.status === 'shipped') { %>
+                <option value="delivered">Deliver</option>
+              <% } %>
+            </select>
+            <button type="submit" class="btn btn-success btn-sm">Update</button>
+          </form>
+        <% } %>
+        <a href="/invoices/invoice-<%= order.id %>.pdf" class="btn btn-primary btn-sm" target="_blank">Invoice</a>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

@@ -4,6 +4,7 @@ const helmet    = require('helmet');
 const morgan    = require('morgan');
 const rateLimit = require('express-rate-limit');
 const path      = require('path');
+const passport  = require('./config/passport');
 
 
 // ROUTES
@@ -21,6 +22,9 @@ const userRoutes    = require('./routes/userRoutes')   ;
 
 const app = express();
 
+// View Engine (EJS)
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Security MiddleWare
 app.use(helmet());
@@ -54,6 +58,7 @@ app.get('/', (req, res) => {
   res.status(200).json({ success: true, message: 'Welcome to E-Commerce API' });
 });
 
+app.use(passport.initialize());
 
 // API Routes
 app.use( '/api/v1/auth'    , authRoutes);
@@ -62,7 +67,7 @@ app.use( '/api/v1/users'   , userRoutes);
 app.use( '/api/v1/orders'  , orderRoutes);
 app.use( '/api/v1/cart'    , cartRoutes);
 app.use( '/api/v1/reviews' , reviewRoutes);
-app.use( '/api/v1/admin'   , adminRoutes);
+app.use( '/admin'          , adminRoutes);
 
 
 // 404 handLer

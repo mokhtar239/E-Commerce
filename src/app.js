@@ -22,18 +22,26 @@ const userRoutes    = require('./routes/userRoutes')   ;
 
 const app = express();
 
+// Behind a reverse proxy (Nginx/Heroku/Render) — required for correct req.ip / rate-limit
+app.set('trust proxy', 1);
+
 // View Engine (EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Security MiddleWare
 app.use(helmet());
-app.use(cors());
+
+const allowedOrigins = (process.env.FRONTEND_URL || '').split(',').map(s => s.trim()).filter(Boolean);
+app.use(cors({
+    origin: allowedOrigins.length ? allowedOrigins : false,
+    credentials: true
+}));
 
 
 // Body Parser
 app.use(express.json({ limit : '10kb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 
 // logger in development
@@ -41,13 +49,21 @@ if (process.env.NODE_ENV === 'development')
     app.use(morgan('dev'));
 
 
-// Rate Limiter
+// Rate Limiter (general)
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000 , 
+    windowMs: 15 * 60 * 1000 ,
     max      : 100 ,
     message  : {success:false , message : 'Too Many Requests , please try again Later'}
 })
 app.use('/api' , limiter);
+
+// Stricter limiter for auth endpoints (brute-force protection)
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    skipSuccessfulRequests: true,
+    message: { success: false, message: 'Too many auth attempts, please try again later' }
+});
 
 
 // static Files
@@ -61,6 +77,9 @@ app.get('/', (req, res) => {
 app.use(passport.initialize());
 
 // API Routes
+app.use('/api/v1/auth/login', authLimiter);
+app.use('/api/v1/auth/register', authLimiter);
+app.use('/api/v1/auth/forgot-password', authLimiter);
 app.use( '/api/v1/auth'    , authRoutes);
 app.use( '/api/v1/products', productRoutes);
 app.use( '/api/v1/users'   , userRoutes);

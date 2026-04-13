@@ -6,7 +6,7 @@ const errorHandler =  (err , req , res , next) => {
     const response = { 
         success : false , 
         status ,
-        message: err.isOperational ? err.message : 'something get wrong'
+        message: err.isOperational ? err.message : 'something went wrong'
     };
 
     if (process.env.NODE_ENV === 'development'){

@@ -37,7 +37,7 @@ const resizeImagesMiddleware = async (req, res, next) => {
             .resize(800, 800, { fit: 'inside', withoutEnlargement: true })
             .toFormat('jpeg')
             .jpeg({ quality: 85 })
-            .toFile(path.join('public/uploads/products', filename));
+            .toFile(path.join(__dirname, '../../public/uploads/products', filename));
 
         req.body.images.push(filename);
     });

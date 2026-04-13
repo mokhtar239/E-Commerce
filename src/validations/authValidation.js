@@ -20,12 +20,12 @@ const registerSchema = joi.object({
         }),
 
     password: joi.string()
-        .min(6)
+        .min(8)
         .max(126)
         .required()
         .messages({
             'any.required': 'Password is required',
-            'string.min': 'Password must be at least 6 characters',
+            'string.min': 'Password must be at least 8 characters',
             'string.max': 'Password cannot exceed 126 characters'
         }),
 
@@ -68,12 +68,12 @@ const updatePasswordSchema = joi.object({
         }),
 
     newPassword: joi.string()
-        .min(6)
+        .min(8)
         .max(126)
         .required()
         .messages({
             'any.required': 'Password is required',
-            'string.min': 'Password must be at least 6 characters',
+            'string.min': 'Password must be at least 8 characters',
             'string.max': 'Password cannot exceed 126 characters'
         })
 });

@@ -66,6 +66,10 @@ exports.addItem = catchAsync(async (req, res, next) => {
 exports.updateItem = catchAsync(async (req, res, next) => {
   const { quantity } = req.body;
 
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+    return next(new AppError('Quantity must be an integer between 1 and 10', 400));
+  }
+
   const cart = await Cart.findOne({ userId: req.user.id });
 
   if (!cart) {
@@ -82,6 +86,10 @@ exports.updateItem = catchAsync(async (req, res, next) => {
 
   const product = await Product.findById(req.params.productId);
 
+  if (!product || !product.isActive) {
+    return next(new AppError('Product is no longer available', 404));
+  }
+
   if (quantity > product.stock) {
     return next(new AppError(`Only ${product.stock} items available in stock`, 400));
   }
@@ -95,10 +103,14 @@ exports.updateItem = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.removeItem = catchAsync(async (req, res) => {
+exports.removeItem = catchAsync(async (req, res, next) => {
   const productId = req.params.productId;
 
   const cart = await Cart.findOne({ userId: req.user.id });
+
+  if (!cart) {
+    return next(new AppError('Cart not found', 404));
+  }
 
   cart.items = cart.items.filter(
     item => item.productId.toString() !== productId

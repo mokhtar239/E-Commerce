@@ -3,6 +3,7 @@ const GoogleStartegy = require('passport-google-oauth20').Strategy;
 const User = require('../models/sql/User');
 const {sendWelcomeEmail} = require('../utils/email');
 
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 Passport.use(new GoogleStartegy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET ,
@@ -39,4 +40,7 @@ Passport.use(new GoogleStartegy({
     }
  }
 ));
+} else {
+    console.warn("⚠️  Google OAuth disabled — GOOGLE_CLIENT_ID/SECRET not set in .env");
+}
 module.exports = Passport;
